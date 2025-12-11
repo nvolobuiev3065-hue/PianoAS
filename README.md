@@ -380,53 +380,6 @@ JUMPIFEQ $t1, $t2  # Jump if equal
 ```
 **Use Case:** Create loops, conditional playback, count-based repetition.
 
----
-
-## Complete Example: "Still D.R.E." Pattern
-
-```assembly
-# Setup
-LOADI $s1, 90           # Volume
-LOADI $t1, 120          # Tempo
-SETTEMPO $s2, $t1
-LOADI $t3, 3            # Octave
-SETOCTAVE $s3, $t3
-
-# CEA pattern - 8 times
-LOADI $t1, 48           # C
-LOADI $t2, 64           # E
-LOADI $t3, 69           # A
-
-CHORDS $t1, $t2, $t3
-CHORDS $t1, $t2, $t3
-CHORDS $t1, $t2, $t3
-CHORDS $t1, $t2, $t3
-CHORDS $t1, $t2, $t3
-CHORDS $t1, $t2, $t3
-CHORDS $t1, $t2, $t3
-CHORDS $t1, $t2, $t3
-
-# BEA pattern - 3 times
-LOADI $t1, 47           # B
-LOADI $t2, 64           # E
-LOADI $t3, 69           # A
-
-CHORDS $t1, $t2, $t3
-CHORDS $t1, $t2, $t3
-CHORDS $t1, $t2, $t3
-
-# BEG pattern - 5 times
-LOADI $t1, 47           # B
-LOADI $t2, 64           # E
-LOADI $t3, 67           # G
-
-CHORDS $t1, $t2, $t3
-CHORDS $t1, $t2, $t3
-CHORDS $t1, $t2, $t3
-CHORDS $t1, $t2, $t3
-CHORDS $t1, $t2, $t3
-```
-
 ## MIDI Note Reference
 
 | Note | Octave 0 | Octave 1 | Octave 2 | Octave 3 | Octave 4 | Octave 5 |
