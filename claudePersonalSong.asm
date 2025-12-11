@@ -1,0 +1,80 @@
+LOADI $s1, 85
+LOADI $t1, 100
+SETTEMPO $s2, $t1
+LOADI $t3, 4
+SETOCTAVE $s3, $t3
+
+LOADI $t1, 64
+LOADI $t2, 76
+LOADI $t3, 81
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+
+LOADI $t1, 60
+LOADI $t2, 72
+LOADI $t3, 76
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+
+LOADI $t1, 62
+LOADI $t2, 74
+LOADI $t3, 79
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+
+LOADI $t1, 59
+LOADI $t2, 71
+LOADI $t3, 74
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+
+LOADI $t1, 64
+LOADI $t2, 76
+LOADI $t3, 81
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+
+LOADI $t1, 60
+LOADI $t2, 72
+LOADI $t3, 76
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+
+LOADI $t1, 62
+LOADI $t2, 74
+LOADI $t3, 79
+CHORDS $t1, $t2, $t3
+
+LOADI $t1, 64
+LOADI $t2, 76
+LOADI $t3, 79
+CHORDS $t1, $t2, $t3
+
+LOADI $t1, 67
+LOADI $t2, 79
+LOADI $t3, 84
+CHORD $t1, $t2, $t3
+
+LOADI $t1, 64
+LOADI $t2, 76
+LOADI $t3, 81
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+
+LOADI $t1, 60
+LOADI $t2, 72
+LOADI $t3, 76
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+
+LOADI $t1, 62
+LOADI $t2, 74
+LOADI $t3, 79
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+
+LOADI $t1, 59
+LOADI $t2, 71
+LOADI $t3, 74
+CHORD $t1, $t2, $t3
