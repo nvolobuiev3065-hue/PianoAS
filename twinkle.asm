@@ -1,0 +1,136 @@
+LOADI $s1, 80
+LOADI $t1, 120
+SETTEMPO $s2, $t1
+LOADI $t3, 4
+SETOCTAVE $s3, $t3
+LOADI $t1, 60
+
+COPY $s0, $t1
+PLAY
+PLAY
+
+BLENDI $t1, 7
+COPY $s0, $t1
+PLAY
+PLAY
+
+BLENDI $t1, 2
+COPY $s0, $t1
+PLAY
+PLAY
+
+LOADI $t2, 2
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+
+LOADI $t2, 2
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+PLAY
+
+LOADI $t2, 1
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+PLAY
+
+LOADI $t2, 2
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+PLAY
+
+LOADI $t2, 2
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+
+BLENDI $t1, 7
+COPY $s0, $t1
+PLAY
+PLAY
+
+LOADI $t2, 2
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+PLAY
+
+LOADI $t2, 1
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+PLAY
+
+LOADI $t2, 2
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+
+BLENDI $t1, 5
+COPY $s0, $t1
+PLAY
+PLAY
+
+LOADI $t2, 2
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+PLAY
+
+LOADI $t2, 1
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+PLAY
+
+LOADI $t2, 2
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+
+LOADI $t2, 2
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+PLAY
+
+BLENDI $t1, 7
+COPY $s0, $t1
+PLAY
+PLAY
+
+BLENDI $t1, 2
+COPY $s0, $t1
+PLAY
+PLAY
+
+LOADI $t2, 2
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+
+LOADI $t2, 2
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+PLAY
+
+LOADI $t2, 1
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+PLAY
+
+LOADI $t2, 2
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
+PLAY
+
+LOADI $t2, 2
+DIFF $t1, $t1, $t2
+COPY $s0, $t1
+PLAY
