@@ -396,5 +396,3 @@ JUMPIFEQ $t1, $t2  # Jump if equal
 | A    | 21       | 33       | 45       | 57       | 69       | 81       |
 | A#   | 22       | 34       | 46       | 58       | 70       | 82       |
 | B    | 23       | 35       | 47       | 59       | 71       | 83       |
-
-**Note:** Middle C (often called C4) is MIDI note 60.
