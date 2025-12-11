@@ -15,6 +15,8 @@ The following registers have special purposes in Piano Assembly:
 
 **Note:** General purpose registers (`$t0-$t9`, `$s4-$s7`, etc.) can be used freely for calculations and temporary storage.
 
+---
+
 ## Instruction Set
 
 #### `LOADI $t1, 120`
@@ -228,4 +230,218 @@ COPY $s0, $t1       # Copy pitch value to pitch register
 
 #### `PLAY`
 **Purpose:** Play a note using values from the special registers  
-**Format:** `PLAY
+**Format:** `PLAY`  
+**Registers Used:**
+- `$s0` (register 16): Pitch (MIDI note 0-127)
+- `$s1` (register 17): Volume (0-127)
+- `$s2` (register 18): Tempo (BPM - determines note duration)
+- `$s3` (register 19): Octave offset
+
+**Calculation:** Effective pitch = `$s0 + ($s3 × 12)`  
+**Duration:** One beat = `60000 ms / tempo`
+
+**Example:**
+```assembly
+LOADI $s1, 80           # Set volume
+LOADI $t1, 120
+SETTEMPO $s2, $t1       # Set tempo to 120 BPM
+LOADI $t3, 4
+SETOCTAVE $s3, $t3      # Set octave 4
+LOADI $t1, 60
+COPY $s0, $t1           # Set pitch to Middle C
+PLAY                    # Play the note
+```
+
+---
+
+#### `PLAYR $t1, $t2`
+**Purpose:** Play a note directly from two registers (pitch and volume)  
+**Format:** `PLAYR <pitch register>, <volume register>`  
+**Registers Used:**
+- First parameter: Contains MIDI pitch (0-127)
+- Second parameter: Contains volume (0-127)
+- Register 10: Tempo (read automatically)
+
+**Example:**
+```assembly
+LOADI $t1, 60      # Middle C
+LOADI $t2, 90      # Volume
+PLAYR $t1, $t2     # Play directly
+```
+**Use Case:** Quick single-note playback without setting up all special registers.
+
+---
+
+#### `CHORD $t1, $t2, $t3`
+**Purpose:** Play three notes simultaneously (full beat duration)  
+**Format:** `CHORD <pitch1>, <pitch2>, <pitch3>`  
+**Registers Used:**
+- Three pitch registers: Each contains a MIDI note (0-127)
+- Register 9: Volume (read automatically)
+- Register 10: Tempo (determines duration)
+
+**Example:**
+```assembly
+LOADI $t1, 48      # C
+LOADI $t2, 64      # E
+LOADI $t3, 69      # A
+CHORD $t1, $t2, $t3  # Play C-E-A chord
+```
+**Use Case:** Play harmonies, build chords, create fuller sound.
+
+---
+
+#### `CHORDS $t1, $t2, $t3`
+**Purpose:** Play three notes simultaneously (short/staccato duration)  
+**Format:** `CHORDS <pitch1>, <pitch2>, <pitch3>`  
+**Registers Used:**
+- Three pitch registers: Each contains a MIDI note (0-127)
+- Register 9: Volume (read automatically)
+- Register 10: Tempo (used for timing calculation)
+
+**Duration:** Approximately 1/8 of a beat (much shorter than CHORD)
+
+**Example:**
+```assembly
+LOADI $t1, 48
+LOADI $t2, 64
+LOADI $t3, 69
+CHORDS $t1, $t2, $t3  # Play quick staccato chord
+```
+**Use Case:** Fast rhythmic patterns, percussive chords, "Still D.R.E." style playing.
+
+---
+
+#### `REST 1`
+**Purpose:** Pause playback for a specified number of beats  
+**Format:** `REST <number of beats>` (currently uses immediate in template, should accept variable)  
+**Registers Used:**
+- Register 17 (`$s1`): Tempo (read automatically for duration calculation)
+
+**Duration:** `(60000 × beats) / tempo` milliseconds
+
+**Example:**
+```assembly
+PLAY
+REST 1      # Wait one beat
+PLAY
+REST 2      # Wait two beats
+```
+**Use Case:** Create rhythm, space between notes, add musical timing.
+
+---
+
+#### `GLISS $t1, $t2`
+**Purpose:** Play a glissando (smooth slide between two pitches)  
+**Format:** `GLISS <start pitch>, <end pitch>`  
+**Registers Used:**
+- First parameter: Starting MIDI note
+- Second parameter: Ending MIDI note
+- Register 9: Volume
+- Register 10: Tempo (determines speed)
+
+**Example:**
+```assembly
+LOADI $t1, 60      # Start at Middle C
+LOADI $t2, 72      # End at C one octave up
+GLISS $t1, $t2     # Play smooth upward slide
+```
+**Use Case:** Smooth pitch transitions, dramatic effects, piano glissando effects.
+
+---
+
+#### `RANDOMP`
+**Purpose:** Generate a random pitch value (0-127)  
+**Format:** `RANDOMP`  
+**Registers Used:**
+- Stores result in operands[0] (check implementation for which register)
+
+**Example:**
+```assembly
+RANDOMP            # Generate random pitch
+# Random value now available for use
+```
+**Use Case:** Algorithmic composition, random melodies, experimental music.
+
+---
+
+### Control Flow Instructions
+
+#### `JUMPIFEQ $t1, $t2`
+**Purpose:** Conditionally jump to a label if two register values are equal  
+**Format:** `JUMPIFEQ <register1>, <register2>`  
+**Operation:** If `$t1 == $t2`, jump to address in operands[2]
+
+**Example:**
+```assembly
+LOADI $t1, 10      # Counter
+LOADI $t2, 10      # Target value
+JUMPIFEQ $t1, $t2  # Jump if equal
+```
+**Use Case:** Create loops, conditional playback, count-based repetition.
+
+---
+
+## Complete Example: "Still D.R.E." Pattern
+
+```assembly
+# Setup
+LOADI $s1, 90           # Volume
+LOADI $t1, 120          # Tempo
+SETTEMPO $s2, $t1
+LOADI $t3, 3            # Octave
+SETOCTAVE $s3, $t3
+
+# CEA pattern - 8 times
+LOADI $t1, 48           # C
+LOADI $t2, 64           # E
+LOADI $t3, 69           # A
+
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+
+# BEA pattern - 3 times
+LOADI $t1, 47           # B
+LOADI $t2, 64           # E
+LOADI $t3, 69           # A
+
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+
+# BEG pattern - 5 times
+LOADI $t1, 47           # B
+LOADI $t2, 64           # E
+LOADI $t3, 67           # G
+
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+CHORDS $t1, $t2, $t3
+```
+
+## MIDI Note Reference
+
+| Note | Octave 0 | Octave 1 | Octave 2 | Octave 3 | Octave 4 | Octave 5 |
+|------|----------|----------|----------|----------|----------|----------|
+| C    | 12       | 24       | 36       | 48       | 60       | 72       |
+| C#   | 13       | 25       | 37       | 49       | 61       | 73       |
+| D    | 14       | 26       | 38       | 50       | 62       | 74       |
+| D#   | 15       | 27       | 39       | 51       | 63       | 75       |
+| E    | 16       | 28       | 40       | 52       | 64       | 76       |
+| F    | 17       | 29       | 41       | 53       | 65       | 77       |
+| F#   | 18       | 30       | 42       | 54       | 66       | 78       |
+| G    | 19       | 31       | 43       | 55       | 67       | 79       |
+| G#   | 20       | 32       | 44       | 56       | 68       | 80       |
+| A    | 21       | 33       | 45       | 57       | 69       | 81       |
+| A#   | 22       | 34       | 46       | 58       | 70       | 82       |
+| B    | 23       | 35       | 47       | 59       | 71       | 83       |
+
+**Note:** Middle C (often called C4) is MIDI note 60.
